@@ -6952,3 +6952,10 @@ body canvas {
   background: -moz-linear-gradient(bottom right, red, yellow); /* For Firefox 3.6 to 15 */
   background: linear-gradient(to bottom right, red, yellow); /* Standard syntax */
 }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

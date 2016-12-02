@@ -24,14 +24,35 @@ export default class HireMe extends React.Component {
      const samplesInput = document.getElementById('samplesInput').value;
      const budgetInput = document.getElementById('budgetInput').value;
 
-     console.log(name);
-     console.log(businessInput);
-     console.log(emailInput);
-     console.log(websiteInput);
-     console.log(designMediumInput);
-     console.log(designDescInput);
-     console.log(samplesInput);
-     console.log(budgetInput);
+     const textBody = `
+     Name:
+     ${name}
+
+     Business Name:
+     ${businessInput}
+
+     E-Mail:
+     ${emailInput}
+
+     Website:
+     ${websiteInput}
+
+     Design Medium:
+     ${designMediumInput}
+
+     Design Description:
+     ${designDescInput}
+
+     Samples:
+     ${samplesInput}
+
+     Budget:
+     ${budgetInput}
+     `;
+
+     console.log(textBody);
+
+     this.sendEmail(textBody);
 
      event.preventDefault();
   }
@@ -40,7 +61,7 @@ export default class HireMe extends React.Component {
     var helper = require('sendgrid').mail;
     var from_email = new helper.Email('noreply@shacrow.de');
     var to_email = new helper.Email('admin@shacrow.de');
-    var subject = 'Hello World from the SendGrid Node.js Library!';
+    var subject = 'Hey Shacrow! Someone sent you a message';
     var content = new helper.Content(text);
     var mail = new helper.Mail(from_email, subject, to_email, content);
 
