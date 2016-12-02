@@ -5,79 +5,69 @@ import GoogleAd from "../components/GoogleAd.js";
 
 //var sendgrid = require('sendgrid')('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');
 
+//var postmark = require("postmark");
 
 export default class HireMe extends React.Component {
 
   constructor() {
     super();
-
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
-     const name = document.getElementById('nameInput').value;
-     const businessInput = document.getElementById('businessInput').value;
-     const emailInput = document.getElementById('emailInput').value;
-     const websiteInput = document.getElementById('websiteInput').value;
-     const designMediumInput = document.getElementById('designMediumInput').value;
-     const designDescInput = document.getElementById('designDescInput').value;
-     const samplesInput = document.getElementById('samplesInput').value;
-     const budgetInput = document.getElementById('budgetInput').value;
+  componentDidMount() {
+    $('#sendMail').click(function() {
+      const name = document.getElementById('nameInput').value;
+      const businessInput = document.getElementById('businessInput').value;
+      const emailInput = document.getElementById('emailInput').value;
+      const websiteInput = document.getElementById('websiteInput').value;
+      const designMediumInput = document.getElementById('designMediumInput').value;
+      const designDescInput = document.getElementById('designDescInput').value;
+      const samplesInput = document.getElementById('samplesInput').value;
+      const budgetInput = document.getElementById('budgetInput').value;
 
-     const textBody = `
-     Name:
-     ${name}
+      const textBody = `
+      Name:
+      ${name}
 
-     Business Name:
-     ${businessInput}
+      Business Name:
+      ${businessInput}
 
-     E-Mail:
-     ${emailInput}
+      E-Mail:
+      ${emailInput}
 
-     Website:
-     ${websiteInput}
+      Website:
+      ${websiteInput}
 
-     Design Medium:
-     ${designMediumInput}
+      Design Medium:
+      ${designMediumInput}
 
-     Design Description:
-     ${designDescInput}
+      Design Description:
+      ${designDescInput}
 
-     Samples:
-     ${samplesInput}
+      Samples:
+      ${samplesInput}
 
-     Budget:
-     ${budgetInput}
-     `;
+      Budget:
+      ${budgetInput}
+      `;
 
-     console.log(textBody);
+      alert('Sent E-mail');
 
-     this.sendEmail(textBody);
-
-     event.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:1337/api/mail/send',
+        data: 'subject='+ designMediumInput + ' request by ' + name +'&body='+textBody,
+        success: function(resp) {
+          //Notiz; checken ob es ein JSON-Obj ist
+          var obj = jQuery.parseJSON(resp);
+          if(obj.validate) {
+            alert('abgeschickt - '+obj.response);
+          } else {
+            alert('fehler-'+obj.response);
+          }
+        }
+      });
+    });
   }
-
-  sendEmail(text) {
-    var helper = require('sendgrid').mail;
-    var from_email = new helper.Email('noreply@shacrow.de');
-    var to_email = new helper.Email('admin@shacrow.de');
-    var subject = 'Hey Shacrow! Someone sent you a message';
-    var content = new helper.Content(text);
-    var mail = new helper.Mail(from_email, subject, to_email, content);
-
-    var sg = require('sendgrid')('process.env.SENDGRID_API');
-    var request = sg.emptyRequest({
-      method: 'POST',
-      path: '/v3/mail/send',
-      body: mail.toJSON(),
-    });
-
-    sg.API(request, function(error, response) {
-      console.log(response.statusCode);
-      console.log(response.body);
-      console.log(response.headers);
-    });
-  };
 
   render() {
 
@@ -103,7 +93,7 @@ export default class HireMe extends React.Component {
 
             <p style={introStyle}>Thank you for considering to hire me. Please take some time to fill out this form. I will ask you for these informations anyway. Thank you very much. I am looking forward to our work together.</p>
 
-            <form onSubmit={this.handleSubmit}>
+            <form>
               <h4>Personal Information</h4>
               <div class="form-group">
                 <label for="nameInput">FULL NAME</label>
@@ -164,7 +154,7 @@ export default class HireMe extends React.Component {
                   </small>
                 </div>
 
-              <button type="submit" class="btn btn-danger">Submit</button>
+              <button id="sendMail" type="button" class="btn btn-danger">Submit</button>
             </form>
 
             {/* Google Ad */}
