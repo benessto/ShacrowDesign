@@ -50,11 +50,9 @@ export default class HireMe extends React.Component {
       ${budgetInput}
       `;
 
-      alert('Sent E-mail');
-
       $.ajax({
         type: 'POST',
-        url: 'http://localhost:1337/api/mail/send',
+        url: 'http://shacrow.de:1337/api/mail/send',
         data: 'subject='+ designMediumInput + ' request by ' + name +'&body='+textBody,
         success: function(resp) {
           //Notiz; checken ob es ein JSON-Obj ist
