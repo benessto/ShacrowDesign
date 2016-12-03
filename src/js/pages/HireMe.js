@@ -152,7 +152,9 @@ export default class HireMe extends React.Component {
                   </small>
                 </div>
 
-              <button id="sendMail" type="button" class="btn btn-danger">Submit</button>
+                <div class="g-recaptcha" data-sitekey="6LdBug0UAAAAAB0JJ3KgtEcb4Vz_PhJHqh5nTgRF"></div>
+
+                <button id="sendMail" type="button" class="btn btn-danger">Submit</button>
             </form>
 
             {/* Google Ad */}
