@@ -6,6 +6,7 @@ import Nav from "../components/layout/Nav";
 import Header from "../components/layout/Header";
 
 export default class Layout extends React.Component {
+
   render() {
     const { location } = this.props;
     const containerStyle = {

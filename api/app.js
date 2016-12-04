@@ -24,14 +24,14 @@ app.post('/api/mail/send', (req, res) => {
   // "TextBody": text
   // });
   var fromMail  = 'admin@shacrow.de';
-  var to        = 'admin@shacrow.de';
+  var to        = req.body.to;
   var subject   = req.body.subject;
   var body      = req.body.body;
 
   // Notiz für mich; Text muss English geschrieben werden, sonst rip
 
-  if(fromMail == '' || fromMail === undefined || subject == '' || subject === undefined || body == '' || body === undefined)
-    res.end(JSON.stringify({ 'validate' : false, 'response' : 'Ein Fehler ist aufgetreten. INPUTS NOT GUT' }));
+  if(subject == '' || subject === undefined || body == '' || body === undefined || to == '' || to === undefined)
+    res.end(JSON.stringify({ 'validate' : false, 'response' : 'Ein Fehler ist aufgetreten. INPUTS NOT GUD' }));
 
   client.sendEmail({
       "From": fromMail,
@@ -41,16 +41,16 @@ app.post('/api/mail/send', (req, res) => {
   }, (error, result) => {
       if(error) {
         console.error("Unable to send via postmark: " + error.message);
-        res.end(JSON.stringify({ 'validate' : false, 'response' : 'Ein Fehler ist aufgetreten.' }));
+        res.end(JSON.stringify({ 'validate' : false, 'response' : 'There is an error.' }));
       }
 
-      console.info('E-mail wurde erfolgreich abgeschickt');
-      res.end(JSON.stringify({ 'validate' : true, 'response' : 'E-mail wurde erfolgreich abgeschickt' }));
+      console.info('E-mail wurde erfolgreich abgeschickt an '+to);
+      res.end(JSON.stringify({ 'validate' : true, 'response' : 'E-mail sent successfully' }));
   });
 });
 
 app.listen(1337, () => {
-  console.log('Express wurde gestartet...');
+  console.log('Express wurde gestartet... yep');
 });
 
 // Notiz an mich; später Log-Function mit einem Switch erstellen um zu loggen + Datum - Urhzeit

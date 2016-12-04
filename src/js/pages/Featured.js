@@ -35,6 +35,8 @@ export default class Featured extends React.Component {
 
               {/* Articles */}
               <div class="row">
+                <Article title="KOREANPANDA GAMING LOGO DESIGN" imgPath="../../img/koreanpanda_gaming_logo.png"/>
+                <Article title="STIXX VLOGS LOGO DESIGN" imgPath="../../img/stixx_vlogs_logo.png"/>
                 <Article title="9MOONS.GG LOGO DESIGN" imgPath="../../img/logo_1.png"/>
                 <Article title="GALAXY NETWORK LOGO DESIGN" imgPath="../../img/logo_3.png"/>
                 <a target="_blank" href="https://www.youtube.com/watch?v=R-RC49is8zU"><Article  title="GOGROGO YOUTUBE INTRO" imgPath="../../img/gogrogo_intro.png"/></a>

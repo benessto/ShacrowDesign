@@ -1,4 +1,5 @@
 import React from "react";
+import { IndexLink, Link } from "react-router";
 
 
 export default class Footer extends React.Component {
@@ -30,8 +31,13 @@ export default class Footer extends React.Component {
             <div class="col-lg-12">
 
 
+              <p>
+                <IndexLink to="/">Impressum</IndexLink>
+              </p>
 
-              <p>Impressum</p>
+              <a target="_blank" href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CYT9BU3YTEL2G'>
+                <p>Donate via Paypal</p>
+              </a>
 
               <p>Copyright &copy; Shacrow Design</p>
 
