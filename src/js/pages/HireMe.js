@@ -3,18 +3,16 @@ import React from "react";
 import Header from "../components/layout/Header.js"
 import GoogleAd from "../components/GoogleAd.js";
 
+
 //var sendgrid = require('sendgrid')('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');
 
 //var postmark = require("postmark");
 
 export default class HireMe extends React.Component {
 
-  constructor() {
-    super();
-  }
-
   componentDidMount() {
     $('#sendMail').click(function() {
+
       const name = document.getElementById('nameInput').value;
       const businessInput = document.getElementById('businessInput').value;
       const emailInput = document.getElementById('emailInput').value;
@@ -24,21 +22,79 @@ export default class HireMe extends React.Component {
       const samplesInput = document.getElementById('samplesInput').value;
       const budgetInput = document.getElementById('budgetInput').value;
 
+      let inputOk = true;
+
+      if (name == '') {
+        $('#alertName').css('display', 'block');
+        inputOk = false;
+      } else {
+        $('#alertName').css('display', 'none');
+      }
+      if (businessInput == '') {
+        $('#alertBusiness').css('display', 'block');
+        inputOk = false;
+      } else {
+        $('#alertBusiness').css('display', 'none');
+      }
+      if (emailInput == '') {
+        $('#alertEmail').css('display', 'block');
+        inputOk = false;
+      } else {
+        $('#alertEmail').css('display', 'none');
+      }
+      if (designMediumInput == '') {
+        $('#alertDesignMedium').css('display', 'block');
+        inputOk = false;
+      } else {
+        $('#alertDesignMedium').css('display', 'none');
+      }
+      if (designDescInput == '') {
+        $('#alertDesc').css('display', 'block');
+        inputOk = false;
+      } else {
+        $('#alertDesc').css('display', 'none');
+      }
+      if (budgetInput == 'CHOOSE YOUR BUDGET') {
+        $('#alertBudget').css('display', 'block');
+        inputOk = false;
+      } else {
+        $('#alertBudget').css('display', 'none');
+      }
+
+      if($('#alertSubmit').css('display') == 'none') {
+        if (inputOk) {
+          $('#alertSubmit').addClass('alert-success').removeClass('alert-danger');
+          $('#alertSubmit').html(`<strong>See you soon!</strong> You will receive a confirmation e-mail at <strong>${emailInput}</strong>. If you don't receive an e-mail, please contact me directly at shacrow@admin.de`).fadeIn('slow');
+        } else {
+          $('#alertSubmit').addClass('alert-danger').removeClass('alert-success')
+          $('#alertSubmit').html(`<strong>Ops.<strong> Looks like you forgot to fill out some things..`).fadeIn('slow');
+          return;
+        }
+      } else {
+        $('#alert').fadeOut();
+        if (inputOk) {
+          $('#alertSubmit').addClass('alert-success').removeClass('alert-danger');
+          $('#alertSubmit').html(`<strong>Thank you</strong> You will receive a confirmation e-mail at <strong>${emailInput}</strong>. If you don't receive an e-mail, please contact me directly at shacrow@admin.de`).fadeIn('slow');
+        }
+        else{
+          $('#alertSubmit').addClass('alert-danger').removeClass('alert-success')
+          $('#alertSubmit').html(`<strong>Ops.<strong> Looks like you forgot to fill out some things..`).fadeIn('slow');
+          return;
+        }
+      }
+
+      console.log('AFTER VALIDATION');
+
       const textBody = `
-      Name:
-      ${name}
+      Name: ${name}
 
-      Business Name:
-      ${businessInput}
+      Business Name: ${businessInput}
 
-      E-Mail:
-      ${emailInput}
+      E-Mail: ${emailInput}
 
-      Website:
-      ${websiteInput}
+      Website: ${websiteInput}
 
-      Design Medium:
-      ${designMediumInput}
+      Design Medium: ${designMediumInput}
 
       Design Description:
       ${designDescInput}
@@ -46,16 +102,45 @@ export default class HireMe extends React.Component {
       Samples:
       ${samplesInput}
 
-      Budget:
-      ${budgetInput}
+      Budget: ${budgetInput}
       `;
 
       $.ajax({
         type: 'POST',
         url: 'http://shacrow.de:1337/api/mail/send',
-        data: 'subject='+ designMediumInput + ' request by ' + name +'&body='+textBody,
+        data: 'subject='+ designMediumInput + ' request by ' + name +'&body='+textBody + '&to=admin@shacrow.de',
         success: function(resp) {
           //Notiz; checken ob es ein JSON-Obj ist
+          var obj = jQuery.parseJSON(resp);
+          if(obj.validate) {
+            alert('abgeschickt - '+obj.response);
+          } else {
+            alert('fehler-'+obj.response);
+          }
+        }
+      });
+
+      const confirmBody = `
+      Hey ${name}!
+
+      Thank you for considering to hire me! I will look into your request as soon as possible.
+      I will contact you at ${emailInput}, so make sure to check your mails.
+
+      This is an automated message to confirm that your request went through.
+      If you want to add anything, feel free to reply to this E-Mail.
+
+      Shacrow Design
+      (Ben Thitigal)
+
+      Website: http://shacrow.de
+      Facebook: http://facebook.com/ShacrowDesign
+      `;
+
+      $.ajax({
+        type: 'POST',
+        url: 'http://shacrow.de:1337/api/mail/send',
+        data: 'subject=I received your request - '+designMediumInput  + '&body='+confirmBody + '&to='+emailInput,
+        success: function(resp) {
           var obj = jQuery.parseJSON(resp);
           if(obj.validate) {
             alert('abgeschickt - '+obj.response);
@@ -89,24 +174,33 @@ export default class HireMe extends React.Component {
           <div class="col-lg-12">
             <Header title="READY FOR YOUR DESIGN?" />
 
-            <p style={introStyle}>Thank you for considering to hire me. Please take some time to fill out this form. I will ask you for these informations anyway. Thank you very much. I am looking forward to our work together.</p>
+            <p style={introStyle}>Thank you for considering to hire me. Please take some time to fill out this form so I can come up with a design fitting your needs. Thank you very much. I am looking forward to our work with you.</p>
 
             <form>
               <h4>Personal Information</h4>
               <div class="form-group">
-                <label for="nameInput">FULL NAME</label>
+                <label for="nameInput">FULL NAME (required)</label>
                 <input class="form-control" id="nameInput" placeholder="e.g. Ben Thitigal"></input>
               </div>
-
-              <div class="form-group">
-                <label for="businessInput">BUSINESS NAME</label>
-                <input class="form-control" id="businessInput" placeholder="e.g. Shacrow Design"></input>
+              <div id="alertName" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+                <small>Please provide your full name</small>
               </div>
 
               <div class="form-group">
-                <label for="emailInput">E-MAIL</label>
+                <label for="businessInput">BUSINESS NAME (required)</label>
+                <input class="form-control" id="businessInput" placeholder="e.g. Shacrow Design"></input>
+              </div>
+              <div id="alertBusiness" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+                <small>Please provide your business name e.g. Shacrow Design</small>
+              </div>
+
+              <div class="form-group">
+                <label for="emailInput">E-MAIL (required)</label>
                 <input class="form-control" id="emailInput" placeholder="e.g. admin@shacrow.de"></input>
                 <small id="emailHelp" class="form-text text-muted">Make sure you can receive e-mail on this adress. I will use this to contact you. If you prefer another form of communication, we can discuss that via e-mail</small>
+              </div>
+              <div id="alertEmail" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+                <small>Please provide your E-mail</small>
               </div>
 
               <div class="form-group">
@@ -117,14 +211,20 @@ export default class HireMe extends React.Component {
               <h4>Design Information</h4>
 
                 <div class="form-group">
-                  <label for="designMediumInput">DESIGN NEEDED</label>
-                  <input class="form-control" id="designMediumInput" placeholder="e.g. Logo Design, Social Media graphics, Youtube banner.. etc"></input>
+                  <label for="designMediumInput">DESIGN MEDIUM (required)</label>
+                  <input class="form-control" id="designMediumInput" placeholder="e.g. Logo Design, Social media graphics, Youtube banner.. etc"></input>
+                </div>
+                <div id="alertDesignMedium" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+                  <small>Please provide the design medium needed e.g. Logo Design, Social media graphic, Youtube banner.. etc</small>
                 </div>
 
                 <div class="form-group">
-                  <label for="designDescInput">DESCRIPTION</label>
+                  <label for="designDescInput">DESCRIPTION (required)</label>
                   <textarea class="form-control" id="designDescInput" rows="5"></textarea>
                   <small id="designDescHelp" class="form-text text-muted">Please write everything in details. More information will result in a better design that fits your needs</small>
+                </div>
+                <div id="alertDesc" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+                  <small>Please explain me what you need exactly for your design. This can be style, color, size.. etc.</small>
                 </div>
 
                 <div class="form-group">
@@ -134,7 +234,7 @@ export default class HireMe extends React.Component {
                 </div>
 
                 <div class="form-group">
-                  <label for="samplesInput">YOUR BUDGET (IN EURO)</label>
+                  <label for="samplesInput">YOUR BUDGET (IN EURO) (required)</label>
                   <select class="form-control" id="budgetInput">
                     <option selected>CHOOSE YOUR BUDGET</option>
                     <option value="10 - 30">10 - 30 &euro;</option>
@@ -151,10 +251,15 @@ export default class HireMe extends React.Component {
                      <p><a href="#">For a rough pricelist see here</a></p>
                   </small>
                 </div>
+                <div id="alertBudget" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+                  <small>Please provide your budget</small>
+                </div>
 
                 <div class="g-recaptcha" data-sitekey="6LdBug0UAAAAAB0JJ3KgtEcb4Vz_PhJHqh5nTgRF"></div>
 
-                <button id="sendMail" type="button" class="btn btn-danger">Submit</button>
+                <div id="alertSubmit" class="alert alert-success" style={{display: 'none', marginTop: '10px'}}></div>
+
+                <button id="sendMail" type="button" class="btn btn-danger" style={{marginTop: '10px'}}>Submit</button>
             </form>
 
             {/* Google Ad */}
