@@ -9,41 +9,44 @@ export default class Footer extends React.Component {
       padding: "20px"
     };
 
-    const bgStyle = {
-      backgroundColor: "#232323",
-      marginTop: "20px"
-    };
-
     const textStyle = {
       float: "left"
     };
 
-    const fbPageStyle = {
-      float: "right",
-      marginTop: "20px"
-    };
-
     return (
       <footer>
+          <div class="navbar-seperator"></div>
 
-        <div style={bgStyle}>
-          <div class="row" style={style}>
-            <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-12">
 
 
-              <p>
-                <IndexLink to="/">Impressum</IndexLink>
-              </p>
+                <p><a href="http://facebook.com/ShacrowDesign" target="_blank">
+                  <button class="btn btn-footer">Facebook</button>
+                </a></p>
 
-              <a target="_blank" href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CYT9BU3YTEL2G'>
-                <p>Donate via Paypal</p>
-              </a>
+                <p><a href="http://youtube.com/ShaXCwalk" target="_blank">
+                  <button class="btn btn-footer">Youtube</button>
+                </a></p>
 
-              <p>Copyright &copy; Shacrow Design</p>
+                <p><IndexLink to="/HireMe">
+                  <button class="btn btn-footer-big">READY FOR YOUR DESIGN?</button>
+                </IndexLink></p>
 
+                <p><a href="http://instagram.com/Shadisappear" target="_blank">
+                  <button class="btn btn-footer">Instagram</button>
+                </a></p>
+
+
+                <p><a target="_blank" href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CYT9BU3YTEL2G'>
+                  <button class="btn btn-footer" >Donate</button>
+                </a></p>
+
+                <small><IndexLink to="/">Impressum</IndexLink></small>
+                <small>Copyright &copy; Shacrow Design</small>
+
+              </div>
             </div>
-          </div>
-        </div>
       </footer>
     );
   }

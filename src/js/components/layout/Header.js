@@ -10,7 +10,8 @@ export default class Header extends React.Component {
     };
 
     const titleStyle = {
-      backgroundColor: "rgba(35,35,35,0.66)",
+      backgroundColor: "rgba(190,45,45,0.66)",
+      fontWeight: "bold",
       padding: "20px"
     };
 
@@ -23,7 +24,7 @@ export default class Header extends React.Component {
           </div>
         </div>
 
-        <div class="fb-page" data-href="https://www.facebook.com/ShacrowDesign/" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/ShacrowDesign/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ShacrowDesign/">Shacrow</a></blockquote></div>
+        {/*<div class="fb-page" data-href="https://www.facebook.com/ShacrowDesign/" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/ShacrowDesign/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ShacrowDesign/">Shacrow</a></blockquote></div>*/}
 
       </header>
     );

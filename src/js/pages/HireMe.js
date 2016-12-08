@@ -9,6 +9,10 @@ import GoogleAd from "../components/GoogleAd.js";
 //var postmark = require("postmark");
 
 export default class HireMe extends React.Component {
+  constructor() {
+    super();
+  }
+
 
   componentDidMount() {
     $('#sendMail').click(function() {
@@ -63,21 +67,21 @@ export default class HireMe extends React.Component {
 
       if($('#alertSubmit').css('display') == 'none') {
         if (inputOk) {
-          $('#alertSubmit').addClass('alert-success').removeClass('alert-danger');
+          $('#alertSubmit').addClass('alert-success').removeClass('alert-warning');
           $('#alertSubmit').html(`<strong>See you soon!</strong> You will receive a confirmation e-mail at <strong>${emailInput}</strong>. If you don't receive an e-mail, please contact me directly at shacrow@admin.de`).fadeIn('slow');
         } else {
-          $('#alertSubmit').addClass('alert-danger').removeClass('alert-success')
+          $('#alertSubmit').addClass('alert-warning').removeClass('alert-success')
           $('#alertSubmit').html(`<strong>Ops.<strong> Looks like you forgot to fill out some things..`).fadeIn('slow');
           return;
         }
       } else {
         $('#alert').fadeOut();
         if (inputOk) {
-          $('#alertSubmit').addClass('alert-success').removeClass('alert-danger');
+          $('#alertSubmit').addClass('alert-success').removeClass('alert-warning');
           $('#alertSubmit').html(`<strong>Thank you</strong> You will receive a confirmation e-mail at <strong>${emailInput}</strong>. If you don't receive an e-mail, please contact me directly at shacrow@admin.de`).fadeIn('slow');
         }
         else{
-          $('#alertSubmit').addClass('alert-danger').removeClass('alert-success')
+          $('#alertSubmit').addClass('alert-warning').removeClass('alert-success')
           $('#alertSubmit').html(`<strong>Ops.<strong> Looks like you forgot to fill out some things..`).fadeIn('slow');
           return;
         }
@@ -163,7 +167,7 @@ export default class HireMe extends React.Component {
     };
 
     const introStyle = {
-      backgroundColor: "rgba(35,35,35,0.8)",
+      backgroundColor: "rgba(190,45,45,0.8)",
       padding: "20px",
       color: "white"
     };
@@ -174,32 +178,35 @@ export default class HireMe extends React.Component {
           <div class="col-lg-12">
             <Header title="READY FOR YOUR DESIGN?" />
 
-            <p style={introStyle}>Thank you for considering to hire me. Please take some time to fill out this form so I can come up with a design fitting your needs. Thank you very much. I am looking forward to our work with you.</p>
+            <p style={introStyle}>Thank you for considering to hire me.
+               Please take some time to fill out this form so I can come up with a design fitting your needs.
+               Thank you very much. I am looking forward to our work with you.</p>
 
             <form>
-              <h4>Personal Information</h4>
+              <h4>PERSONAL INFORMATION</h4>
+              <small>* = required</small>
               <div class="form-group">
-                <label for="nameInput">FULL NAME (required)</label>
+                <label for="nameInput">FULL NAME *</label>
                 <input class="form-control" id="nameInput" placeholder="e.g. Ben Thitigal"></input>
               </div>
-              <div id="alertName" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+              <div id="alertName" class="alert alert-warning" style={{display: 'none', marginTop: '10px'}}>
                 <small>Please provide your full name</small>
               </div>
 
               <div class="form-group">
-                <label for="businessInput">BUSINESS NAME (required)</label>
+                <label for="businessInput">BUSINESS NAME *</label>
                 <input class="form-control" id="businessInput" placeholder="e.g. Shacrow Design"></input>
               </div>
-              <div id="alertBusiness" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+              <div id="alertBusiness" class="alert alert-warning" style={{display: 'none', marginTop: '10px'}}>
                 <small>Please provide your business name e.g. Shacrow Design</small>
               </div>
 
               <div class="form-group">
-                <label for="emailInput">E-MAIL (required)</label>
+                <label for="emailInput">E-MAIL *</label>
                 <input class="form-control" id="emailInput" placeholder="e.g. admin@shacrow.de"></input>
                 <small id="emailHelp" class="form-text text-muted">Make sure you can receive e-mail on this adress. I will use this to contact you. If you prefer another form of communication, we can discuss that via e-mail</small>
               </div>
-              <div id="alertEmail" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+              <div id="alertEmail" class="alert alert-warning" style={{display: 'none', marginTop: '10px'}}>
                 <small>Please provide your E-mail</small>
               </div>
 
@@ -208,22 +215,22 @@ export default class HireMe extends React.Component {
                 <input class="form-control" id="websiteInput" placeholder="e.g. http://shacrow.de"></input>
               </div>
 
-              <h4>Design Information</h4>
+              <h4>DESIGN INFORMATION</h4>
 
                 <div class="form-group">
-                  <label for="designMediumInput">DESIGN MEDIUM (required)</label>
+                  <label for="designMediumInput">DESIGN MEDIUM *</label>
                   <input class="form-control" id="designMediumInput" placeholder="e.g. Logo Design, Social media graphics, Youtube banner.. etc"></input>
                 </div>
-                <div id="alertDesignMedium" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+                <div id="alertDesignMedium" class="alert alert-warning" style={{display: 'none', marginTop: '10px'}}>
                   <small>Please provide the design medium needed e.g. Logo Design, Social media graphic, Youtube banner.. etc</small>
                 </div>
 
                 <div class="form-group">
-                  <label for="designDescInput">DESCRIPTION (required)</label>
+                  <label for="designDescInput">DESCRIPTION *</label>
                   <textarea class="form-control" id="designDescInput" rows="5"></textarea>
                   <small id="designDescHelp" class="form-text text-muted">Please write everything in details. More information will result in a better design that fits your needs</small>
                 </div>
-                <div id="alertDesc" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+                <div id="alertDesc" class="alert alert-warning" style={{display: 'none', marginTop: '10px'}}>
                   <small>Please explain me what you need exactly for your design. This can be style, color, size.. etc.</small>
                 </div>
 
@@ -234,7 +241,7 @@ export default class HireMe extends React.Component {
                 </div>
 
                 <div class="form-group">
-                  <label for="samplesInput">YOUR BUDGET (IN EURO) (required)</label>
+                  <label for="samplesInput">YOUR BUDGET (IN EURO) *</label>
                   <select class="form-control" id="budgetInput">
                     <option selected>CHOOSE YOUR BUDGET</option>
                     <option value="10 - 30">10 - 30 &euro;</option>
@@ -243,6 +250,7 @@ export default class HireMe extends React.Component {
                     <option value="100 - 150">100 - 150 &euro;</option>
                     <option value="150 - 200">150 - 200 &euro;</option>
                     <option value="200 - 300">200 - 300 &euro;</option>
+                  <option value="300 - 500">300 - 500 &euro;</option>
                   </select>
                   <small id="designDescHelp" class="form-text text-muted">The more you can invest in the creation of your design, the more depth, time, concept design,
                      creative flair your design is likely to have. Investing less doesn't mean that the design will be any less better but investing more will give more value to the creation of the design.
@@ -251,7 +259,7 @@ export default class HireMe extends React.Component {
                      <p><a href="#">For a rough pricelist see here</a></p>
                   </small>
                 </div>
-                <div id="alertBudget" class="alert alert-danger" style={{display: 'none', marginTop: '10px'}}>
+                <div id="alertBudget" class="alert alert-warning" style={{display: 'none', marginTop: '10px'}}>
                   <small>Please provide your budget</small>
                 </div>
 

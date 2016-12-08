@@ -10,21 +10,27 @@ export default class Layout extends React.Component {
   render() {
     const { location } = this.props;
     const containerStyle = {
-      marginTop: "60px"
+      marginTop: "50px"
     };
     const fbStyle = {
-      float: "right"
+      zIndex: "1001",
+      position: "absolute",
+      left: "10px",
+      bottom: "10px",
+      marginTop: "5px"
     }
     console.log("layout");
     return (
-      <div id="particles">
+      <div id="particles-js">
 
-          {/*}<div>
+        {/*<div class="fb-like" data-href="https://www.facebook.com/ShacrowDesign/" data-layout="standard" data-action="like" data-show-faces="false" data-share="true" style={fbStyle} ></div>*/}
+
+          {/*<div>
             <Link to="/">
             <img src="../../img/banner.png" class="img-banner">
             </img>
             </Link>
-          </div>*/}
+          </div> */}
 
           <Nav location={location} />
 
@@ -32,6 +38,7 @@ export default class Layout extends React.Component {
 
             <div class="row">
               <div class="col-lg-12">
+
 
                 {this.props.children}
 

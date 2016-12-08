@@ -23,8 +23,9 @@
 
   <!-- Google Adsense -->
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <script type='text/javascript' src='./js/jquery.particleground.min.js'></script>
-  <script type='text/javascript' src='./js/particleGround.js'></script>
+  <!--<script type='text/javascript' src='./js/jquery.particleground.min.js'></script>
+  <script type='text/javascript' src='./js/particleGround.js'></script>-->
+  <script type='text/javascript' src='./js/particles.js'></script>
 
   <!-- reCAPTCHA -->
   <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -66,6 +67,11 @@
 
   <div id="app"></div>
   <script src="client.min.js"></script>
+  <script>
+    particlesJS.load('particles-js', './js/particlesjs-config.json', function() {
+      console.log('callback - particles.js config loaded');
+    });
+  </script>
 </body>
 
 </html>
